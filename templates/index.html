@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Список дел</h1>
+
+<ul>
+  {% for task in tasks %}
+    <li>
+      {{ task.title }}
+      {% if task.done %}
+        <span style="color: #0cee0c;">✓</span>
+      {% else %}
+        <form method="post"
+              action="{{ url_for('done', number=loop.index0) }}"
+              style="display: inline-block;">
+          <button type="submit">Сделано</button>
+        </form>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+<!-- Одна форма для добавления, только POST -->
+<form method="post" action="{{ url_for('index') }}">
+  <input type="text" name="kopik" placeholder="Новое тело" required>
+  <button type="submit">Добавить</button>
+</form>
+{% endblock %}
